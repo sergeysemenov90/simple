@@ -1,3 +1,5 @@
+from sqlalchemy import select
+
 from database.db import Database
 
 
@@ -12,5 +14,6 @@ class AbstractRepository:
         return obj
 
     async def get(self, id: int):
-        obj = await self.db.get(self.model, id)
+        stmt = select(self.model).where(self.model.id == id)
+        obj = await self.db.get(stmt)
         return obj

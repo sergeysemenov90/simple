@@ -13,7 +13,7 @@ class Note(BaseModel):
     created_at: datetime = None
     is_published: bool
     views: int = 0
-    author: User
+    author: User = None
 
     class Config:
         orm_mode = True

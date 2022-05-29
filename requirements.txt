@@ -5,3 +5,5 @@ pydantic
 uvicorn
 environs
 aiomysql
+cryptography
+itsdangerous
