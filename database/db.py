@@ -45,6 +45,7 @@ class Database:
                     await session.commit()
                     return obj_to_create
                 except IntegrityError as e:
+                    return e
                     logger.info(f'Произошла чудовищная ошибка :( {e}')
 
     async def get(self, stmt):

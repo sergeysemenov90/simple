@@ -7,3 +7,5 @@ environs
 aiomysql
 cryptography
 itsdangerous
+aioredis
+passlib[bcrypt]

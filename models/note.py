@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
-from models.user import User
+from models.user import UserIn
 
 
 class Note(BaseModel):
@@ -13,7 +13,7 @@ class Note(BaseModel):
     created_at: datetime = None
     is_published: bool
     views: int = 0
-    author: User = None
+    author: UserIn = None
 
     class Config:
         orm_mode = True

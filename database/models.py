@@ -14,7 +14,8 @@ class User(Base):
     site_owner = Column(Boolean, default=False)
     first_name = Column(String(30), nullable=True)
     last_name = Column(String(30), nullable=True)
-    username = Column(String(50), nullable=True)
+    username = Column(String(50), unique=True)
+    password = Column(String(200))
     registered = Column(TIMESTAMP(timezone=False), default=datetime.now(), index=True)
 
     notes = relationship('Note', back_populates='author')
