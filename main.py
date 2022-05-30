@@ -1,20 +1,20 @@
 import logging
-from typing import List
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.middleware.sessions import SessionMiddleware
 
+from routers import users
 from database.note_repository import NoteRepository
 from database.user_repository import UserRepository
 from models.note import Note
-from models.user import User
 from middlewares import session_middleware
 
 logger = logging.getLogger(__name__)
+
 app = FastAPI()
 app.add_middleware(BaseHTTPMiddleware, dispatch=session_middleware)
-app.add_middleware(SessionMiddleware, secret_key='aaa')
+app.include_router(users.router)
+
 note_repo = NoteRepository()
 user_repo = UserRepository()
 
@@ -28,14 +28,7 @@ async def main():
     return {'message': 'There are still no notes here'}
 
 
-@app.post('/users/', response_model=User)
-async def user_create(user: User):
-    user = await user_repo.create(user)
-    user = User.from_orm(user)
-    return user
-
-
-@app.post('/notes/', response_model=Note)
+@app.post('/notes/', response_model=Note, status_code=status.HTTP_201_CREATED)
 async def node_create(note: Note):
     note = await note_repo.create(note)
     note = Note.from_orm(note)

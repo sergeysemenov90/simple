@@ -38,7 +38,7 @@ class Database:
     async def create(self, model, obj):
         session = await self.make_session()
         obj_to_create = model(**obj.dict())
-        async with session as session:
+        async with session() as session:
             async with session.begin():
                 try:
                     session.add(obj_to_create)
